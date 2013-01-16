@@ -1,0 +1,51 @@
+'''
+Created on Dec 19, 2012
+
+@author: thospy
+'''
+import unittest
+import time
+
+from secureuser import SecureUser
+
+class EncryptionTest(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_createProduct(self):
+        password = "Pas$word"
+        su = SecureUser(password)
+        self.assertTrue(su.public_key, "There is no publickey")
+        self.assertTrue(su._private_key, "no private key")
+        
+        text = []
+        for i in range(5000):
+            text.append("X")
+        text = "".join(text)
+        
+        messages = []
+        origMessages = []
+        numMessages = 200
+        
+        startTime = time.time()
+        for i in range(numMessages):
+            data = "%i -%s" % (i, text)
+            origMessages.append(data)
+            messages.append(su.encrypt(data, password))
+        timeEncryption = time.time()
+        
+        print "Encryption took %f seconds" % (timeEncryption-startTime)
+        for i in range(numMessages):
+            messages[i] = su.decrypt(messages[i], password)
+            self.assertEqual(messages[i], origMessages[i], "The message has changed during decryptiong")
+        timeDecryption = time.time()
+
+        print "Decryption took %f seconds" % (timeDecryption-timeEncryption)
+        print "En- Decryption took %f seconds" % (timeDecryption-startTime)
+
+if __name__ == "__main__":
+    #import sys;sys.argv = ['', 'Test.testName']
+    unittest.main()
