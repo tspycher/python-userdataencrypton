@@ -45,7 +45,18 @@ class EncryptionTest(unittest.TestCase):
 
         print "Decryption took %f seconds" % (timeDecryption-timeEncryption)
         print "En- Decryption took %f seconds" % (timeDecryption-startTime)
-
+        
+        '''
+        # Time with caching
+        Encryption took 3.782162 seconds
+        Decryption took 3.766210 seconds
+        En- Decryption took 7.548372 seconds
+        
+        # Time without caching
+        Encryption took 0.034477 seconds
+        Decryption took 0.014020 seconds
+        En- Decryption took 0.048497 seconds
+        '''
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
