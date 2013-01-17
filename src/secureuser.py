@@ -3,6 +3,8 @@ from Crypto.Cipher import AES
 import base64
 import random
 import time
+import pickle
+
 
 class SecureUser(object):
     public_key = None
@@ -133,3 +135,18 @@ class SecureUser(object):
 
     def restore_user_password(self):
         pass
+    
+    def serialize(self):
+        '''
+        Serializes this object. An serialized object can get transfered over any connection type like http, tcp etc.
+        '''
+        self._symkey_cache = None
+        self._symkey_cache_time = 0
+        return pickle.dumps(self)
+    
+    @staticmethod
+    def unserialize(objectString):
+        '''
+        Static method for easy access the load method of pickle. Creates an object again from an serialized object.
+        '''
+        return pickle.loads(objectString)

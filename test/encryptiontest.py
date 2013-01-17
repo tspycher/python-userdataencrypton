@@ -15,6 +15,20 @@ class EncryptionTest(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def test_serialisation(self):
+        password = "Pas$word"
+        text = "Ich bin ein Test"
+        
+        su = SecureUser(password)
+        su_serial = su.serialize()
+        
+        self.assertTrue(su_serial, "No serialized object gotten")
+        self.assertEqual(text, su.decrypt(su.encrypt(text, password), password), "Could not en/decrypt userdata")
+        su = None
+        
+        suNew = SecureUser.unserialize(su_serial)
+        self.assertEqual(text, suNew.decrypt(suNew.encrypt(text, password), password), "Could not en/decrypt userdata afer serialisation")
+        
     def test_createProduct(self):
         password = "Pas$word"
         su = SecureUser(password)
@@ -45,6 +59,9 @@ class EncryptionTest(unittest.TestCase):
 
         print "Decryption took %f seconds" % (timeDecryption-timeEncryption)
         print "En- Decryption took %f seconds" % (timeDecryption-startTime)
+        
+        
+        
         
         '''
         # Time with caching
