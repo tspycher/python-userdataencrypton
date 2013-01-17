@@ -136,6 +136,17 @@ class SecureUser(object):
     def restore_user_password(self):
         pass
     
+    def __getstate__(self):
+        '''
+        Makes sure that only allowed attributes getting serialized
+        '''
+        save_attributes = ['public_key', '_private_key','_private_key_rescue','_encrypted_symetrical_key']
+        x = dict()
+        for key ,value in self.__dict__.iteritems():
+            if key in save_attributes:
+                x[key] = value
+        return x
+
     def serialize(self):
         '''
         Serializes this object. An serialized object can get transfered over any connection type like http, tcp etc.
