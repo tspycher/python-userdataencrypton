@@ -64,12 +64,12 @@ class EncryptionTest(unittest.TestCase):
         
         
         '''
-        # Time with caching
+        # Time without caching
         Encryption took 3.782162 seconds
         Decryption took 3.766210 seconds
         En- Decryption took 7.548372 seconds
         
-        # Time without caching
+        # Time with caching
         Encryption took 0.034477 seconds
         Decryption took 0.014020 seconds
         En- Decryption took 0.048497 seconds
