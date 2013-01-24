@@ -40,13 +40,19 @@ class SecureUser(object):
     _session_key_time = None                #: The timestamp of the time the key has last used
     _session_key_timeout = 2                #: Timout in seconds after the session_key gets purged
     
-    def __init__(self, userpassword, level = 1, admin_public_key = None):
+    password = None                         #: contains the random password on newly created instances without any password provided
+    
+    def __init__(self, userpassword = None, level = 1, admin_public_key = None):
         self._create_keymaterial(userpassword, level, admin_public_key)
     
     def _create_keymaterial(self, userpassword, level = 1, admin_public_key = None):
         '''
         Initializes all the keymaterial for a new object
         '''
+        if not userpassword:
+            userpassword = self._random_key(8)
+            self.password = userpassword
+        
         self.security_level = level
         # Create 2048bit strong keypair and load them into a RSA object
         keys = RSA.gen_key(bits=2048, e=7)
@@ -116,6 +122,14 @@ class SecureUser(object):
         '''
         key = self._key(session_password)
         return self._sym_decrypt(data, key)
+    
+    def change_password(self, old_password, new_password):
+        '''
+        Changes the password of the user
+        '''
+        #key = self._key(session_password)
+        private_key = self._sym_decrypt(self._private_key, old_password)
+        self._private_key = self._sym_encrypt(private_key, new_password)
     
     def _key(self, session_password):
         '''

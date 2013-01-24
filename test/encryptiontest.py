@@ -15,6 +15,20 @@ class EncryptionTest(unittest.TestCase):
     def tearDown(self):
         pass
     
+    def test_password_change(self):
+        password = "Pas$word"
+        newPassword = "NewPa$sword"
+        text = "Ich bin ein Test"
+        
+        su = SecureUser(password)
+        sessionKey = su.unlock(password)
+        self.assertEqual(text, su.decrypt(su.encrypt(text, sessionKey), sessionKey), "Could not en/decrypt userdata")
+        
+        print "Changing the Password"
+        su.change_password(password, newPassword)
+        sessionKey = su.unlock(newPassword)
+        self.assertEqual(text, su.decrypt(su.encrypt(text, sessionKey), sessionKey), "Could not en/decrypt userdata")
+    
     def test_password_recovery_level1(self):
         password = "Pas$word"
         su = SecureUser(password)
