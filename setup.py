@@ -8,5 +8,5 @@ setup(name='Userdataencryption',
       author='Thomas Spycher',
       author_email='me@tspycher.com',
       url='https://github.com/tspycher/python-userdataencrypton.git',
-      packages=['secureuser'],
+      packages=[],
      )
