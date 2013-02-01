@@ -8,3 +8,8 @@ The user can choose between 3 security Levels:
 1. Fully automatically recovery of his Password (less secure)
 2. Partial automated recovery of his Password (more secure)
 3. No possibility to recover a lost password. If Password is lost, all data are lost (highest Security)
+
+Installation
+------------
+
+  pip install git+git://github.com/tspycher/python-userdataencrypton.git#egg=userdataencryption
