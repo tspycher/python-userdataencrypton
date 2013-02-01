@@ -9,6 +9,6 @@ setup(name='Userdataencryption',
       author_email='me@tspycher.com',
       url='https://github.com/tspycher/python-userdataencrypton.git',
       packages=['userdataencryption'],
-      package_dir = {'': 'src'},
+      package_dir={'userdataencryption': 'src/userdataencryption'},
       download_url='https://github.com/tspycher/python-userdataencrypton/tarball/master',
      )
