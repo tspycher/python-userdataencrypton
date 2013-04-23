@@ -43,9 +43,9 @@ class SecureUser(object):
     password = None                         #: contains the random password on newly created instances without any password provided
     
     def __init__(self, userpassword = None, level = 1, admin_public_key = None):
-        self._create_keymaterial(userpassword, level, admin_public_key)
+        self.create_keymaterial(userpassword, level, admin_public_key)
     
-    def _create_keymaterial(self, userpassword, level = 1, admin_public_key = None):
+    def create_keymaterial(self, userpassword, level = 1, admin_public_key = None):
         '''
         Initializes all the keymaterial for a new object
         '''
@@ -266,11 +266,11 @@ class SecureUser(object):
         '''
         self._symkey_cache = None
         self._symkey_cache_time = 0
-        return pickle.dumps(self)
+        return base64.b64encode(pickle.dumps(self))
     
     @staticmethod
     def unserialize(objectString):
         '''
         Static method for easy access the load method of pickle. Creates an object again from an serialized object.
         '''
-        return pickle.loads(objectString)
+        return pickle.loads(str(base64.b64decode(objectString)))
